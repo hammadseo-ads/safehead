@@ -128,6 +128,15 @@
     if (next) next.addEventListener("click", function () { track.scrollBy({ left: step(), behavior: "smooth" }); });
   });
 
+  /* awards marquee — duplicate badges once for a seamless CSS auto-scroll loop */
+  document.querySelectorAll(".awards-track").forEach(function (track) {
+    if (track.getAttribute("data-cloned")) return;
+    var kids = [].slice.call(track.children);
+    if (!kids.length) return;
+    kids.forEach(function (n) { track.appendChild(n.cloneNode(true)); });
+    track.setAttribute("data-cloned", "1");
+  });
+
   /* YouTube sound toggle — supports multiple players, only one plays sound at a time */
   var vframes = [].slice.call(document.querySelectorAll(".video-frame"));
   var ytSend = function (frame, fn, args) {
